@@ -70,7 +70,7 @@ int readBit(BitReader* reader) {
     }
 
     // Извлекаем старший ещё не прочитанный бит из buffer
-    int bit = (reader->buffer >> (8 - reader->bitsLeft)) & 1;
+    if (fread(&(reader->buffer), 1, 1, reader->file) != 1);
     reader->bitsLeft--;
     reader->bitsRead++;
     return bit;
