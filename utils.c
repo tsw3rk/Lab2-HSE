@@ -9,16 +9,14 @@ void printStats(unsigned long freqs[256], char* codes[256], uint64_t originalSiz
     printf("Символ | Частота | Код\n");
     printf("------------------------\n");
 
-    // Проходим по всем возможным байтам (0–255)
     for (int i = 0; i < 256; i++) {
         if (freqs[i] > 0) {
-            // Пытаемся отобразить символ в читаемом виде
             char disp = (i >= 32 && i <= 126) ? (char)i : '?';
 
             // Особые случаи: заменяем управляющие символы на буквы
-            if (i == '\n') disp = 'n';  // перевод строки → 'n'
-            if (i == '\t') disp = 't';  // табуляция → 't'
-            if (i == ' ')  disp = ' ';  // пробел остаётся пробелом
+            if (i == '\n') disp = 'n';  
+            if (i == '\t') disp = 't';  
+            if (i == ' ')  disp = ' ';  
 
             // Выводим информацию о символе
             printf("  %3d (%c) | %7lu | %s\n", i, disp, freqs[i], codes[i]);
@@ -36,7 +34,6 @@ void printStats(unsigned long freqs[256], char* codes[256], uint64_t originalSiz
 //   1 - если файлы идентичны,
 //   0 - если различаются (и выводит позицию первого различия),
 //  -1 - если не удалось открыть хотя бы один из файлов.
-// Используется для проверки корректности декодирования.
 int compareFiles(const char* file1, const char* file2) {
     FILE* f1 = fopen(file1, "rb");
     FILE* f2 = fopen(file2, "rb");
@@ -51,14 +48,12 @@ int compareFiles(const char* file1, const char* file2) {
         ch1 = fgetc(f1);
         ch2 = fgetc(f2);
 
-        // Оба файла закончились — значит, совпадают
         if (ch1 == EOF && ch2 == EOF) {
             fclose(f1);
             fclose(f2);
             return 1;
         }
 
-        // Если хотя бы один файл не закончился, а другой — закончился,
         if (ch1 != ch2) {
             printf("Различие на позиции %d: %d vs %d\n", pos, ch1, ch2);
             fclose(f1);
